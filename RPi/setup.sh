@@ -3,7 +3,7 @@
 CONFIGDIR="/etc/knw2300"
 
 
-# check for root (needed to write to /etc)
+# check for root
 if [ "$(id -u)" != "0" ]; then
 	echo "Please run this script as root. (\$sudo setup.sh)"
 	exit 1
@@ -19,6 +19,10 @@ printf "\n"
 # create configuration directory
 [ -d $CONFIGDIR ] || (echo "Creating config dir: "$CONFIGDIR && mkdir -p /etc/knw2300)
 
+# add button watcher to startup scripts
+cp ./start_button_watch.sh /etc/init.d
+update-rc.d start_button_watch.sh defaults
+
 # generate SSH key
 [ -e ${CONFIGDIR}/id_rsa.pub ] || (echo "Generating SSH key: ${CONFIGDIR}/id_rsa" && ssh-keygen -qf ${CONFIGDIR}/id_rsa -N "" && eval $(ssh-agent) > /dev/null && ssh-add ${CONFIGDIR}/id_rsa)
 
@@ -29,3 +33,6 @@ echo $githubrepo >> "${CONFIGDIR}/config.txt"
 
 # Add SSH deploy key to Github
 curl -s --user "${githubusername}" --data "{\"title\":\"knw2300rpi\",\"key\":\"$(cat ${CONFIGDIR}/id_rsa.pub)\"}" https://api.github.com/repos/${githubusername}/${githubrepo}/keys > /dev/null
+
+
+echo "Reboot for changes to take effect"
