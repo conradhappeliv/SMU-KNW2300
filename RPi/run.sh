@@ -1,10 +1,7 @@
 #!/bin/bash
 
-CONFIGDIR="/etc/knw2300"
-
-
-CONFIGFILE=("cat ${CONFIGDIR}/config.txt")
-GITHUBREPO="$(sed '2q;d' ${CONFIGDIR}/config.txt)"
+CONFIGDIR="${HOME}/knw2300"
+. $CONFIGDIR/config.txt
 
 # run already compiled program
-cd ~/${GITHUBREPO} && make run
+cd $REPODIR && java mainclass.class
