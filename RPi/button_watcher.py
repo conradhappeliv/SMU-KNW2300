@@ -16,7 +16,7 @@ while True:
         subprocess.call("/home/pi/SMU-KNW2300/RPi/update.sh", shell=True)
         time.sleep(2)
     if(GPIO.input(26) == False):
-	if run_process.poll() is not None:
+	if run_process.poll() is None:
 		run_process.terminate()
         run_process = subprocess.Popen("exec /home/pi/SMU-KNW2300/RPi/run.sh", shell=True) # exec so run.sh inherits the shell process
         time.sleep(2)
