@@ -3,12 +3,16 @@
 import RPi.GPIO as GPIO
 import subprocess
 import time
+import os
 
 # setup
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(26, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 GPIO.setup(23, GPIO.IN, pull_up_down = GPIO.PUD_UP)
 run_process = subprocess.Popen("exec", shell=True) # "empty" constructor? Probably a better way to do this
+os.setgid(1000)
+os.setuid(1000)
+os.putenv('HOME', '/home/pi')
 
 # main loop
 while True:

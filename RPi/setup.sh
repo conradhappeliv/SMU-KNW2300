@@ -17,7 +17,9 @@ sudo cp ./start_button_watch.sh /etc/init.d
 sudo update-rc.d start_button_watch.sh defaults
 
 # generate SSH key
-[ -e ${CONFIGDIR}/id_rsa.pub ] || (echo "Generating SSH key: ${CONFIGDIR}/id_rsa" && ssh-keygen -qf ${CONFIGDIR}/id_rsa -N "" && eval $(ssh-agent) > /dev/null && ssh-add ${CONFIGDIR}/id_rsa)
+[ -e ${CONFIGDIR}/id_rsa.pub ] || (echo "Generating SSH key: ${CONFIGDIR}/id_rsa" && ssh-keygen -qf ${CONFIGDIR}/id_rsa -N "")
+echo "Host github.com" >> "${HOME}/.ssh/config"
+echo "  IdentityFile ${CONFIGDIR}/id_rsa" >> "${HOME}/.ssh/config"
 
 # create config file
 echo "Writing config file: "${CONFIGDIR}"/config.txt"
