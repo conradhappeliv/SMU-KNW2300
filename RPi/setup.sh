@@ -16,6 +16,9 @@ printf "\n"
 sudo cp ./start_button_watch.sh /etc/init.d
 sudo update-rc.d start_button_watch.sh defaults
 
+# rxtx java libs
+sudo apt-get install librxtx-java
+
 # generate SSH key
 [ -e ${CONFIGDIR}/id_rsa.pub ] || (echo "Generating SSH key: ${CONFIGDIR}/id_rsa" && ssh-keygen -qf ${CONFIGDIR}/id_rsa -N "")
 echo "Host github.com" >> "${HOME}/.ssh/config"
